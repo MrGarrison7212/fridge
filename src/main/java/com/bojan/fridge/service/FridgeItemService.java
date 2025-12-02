@@ -4,6 +4,7 @@ import com.bojan.fridge.domain.dto.FridgeItemCreateRequest;
 import com.bojan.fridge.domain.dto.FridgeItemDto;
 import com.bojan.fridge.domain.dto.FridgeItemUpdateRequest;
 import com.bojan.fridge.domain.mapper.FridgeItemMapper;
+import com.bojan.fridge.exception.FridgeItemNotFoundException;
 import com.bojan.fridge.persistence.model.FridgeItem;
 import com.bojan.fridge.persistence.repository.FridgeItemRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class FridgeItemService {
 
     public FridgeItemDto findById(Long id) {
         FridgeItem item = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Fridge item not found with id: " + id));
+                .orElseThrow(() -> new FridgeItemNotFoundException(id));
         return FridgeItemMapper.toDto(item);
     }
 
@@ -40,7 +41,7 @@ public class FridgeItemService {
 
     public FridgeItemDto update(Long id, FridgeItemUpdateRequest request) {
         FridgeItem existing = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Fridge item not found with id: " + id));
+                .orElseThrow(() -> new FridgeItemNotFoundException(id));
         FridgeItemMapper.applyUpdate(existing, request);
         FridgeItem saved = repository.save(existing);
         return FridgeItemMapper.toDto(saved);
@@ -48,7 +49,7 @@ public class FridgeItemService {
 
     public void delete(Long id) {
         FridgeItem existing = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Fridge item not found with id: " + id));
+                .orElseThrow(() -> new FridgeItemNotFoundException(id));
         repository.delete(existing);
     }
 }

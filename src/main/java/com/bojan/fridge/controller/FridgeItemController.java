@@ -4,6 +4,7 @@ import com.bojan.fridge.domain.dto.FridgeItemCreateRequest;
 import com.bojan.fridge.domain.dto.FridgeItemDto;
 import com.bojan.fridge.domain.dto.FridgeItemUpdateRequest;
 import com.bojan.fridge.service.FridgeItemService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,12 +32,12 @@ public class FridgeItemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public FridgeItemDto create(@RequestBody FridgeItemCreateRequest request) {
+    public FridgeItemDto create(@RequestBody @Valid FridgeItemCreateRequest request) {
         return fridgeItemService.create(request);
     }
 
     @PutMapping("/{id}")
-    public FridgeItemDto update(@PathVariable Long id, @RequestBody FridgeItemUpdateRequest request) {
+    public FridgeItemDto update(@PathVariable Long id, @RequestBody @Valid FridgeItemUpdateRequest request) {
         return fridgeItemService.update(id, request);
     }
 
