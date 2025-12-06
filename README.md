@@ -41,8 +41,8 @@ Each item has:
 
 **Backend**
 
-- Java (e.g. 21)
-- Spring Boot
+- Java 21
+- Spring Boot (4.0.0)
     - Spring Web
     - Spring Data JPA
     - Spring Validation
@@ -61,6 +61,7 @@ Each item has:
 ## 3. Architecture & design
 
 The backend is intentionally small but structured as a typical Spring Boot application.
+It follows a clean layered architecture, which keeps business logic isolated and makes the system easy to extend with new features without breaking existing endpoints.
 
 ### Layers
 
@@ -76,7 +77,7 @@ The backend is intentionally small but structured as a typical Spring Boot appli
     - Throws domain-specific exceptions when needed (e.g. “item not found”)
 
 - **Persistence layer (`persistence`)**
-    - JPA entity `FridgeItem` mapped to a database table
+    - JPA entity/model `FridgeItem` mapped to a database table
     - `FridgeItemRepository` extends `JpaRepository<FridgeItem, Long>`
 
 - **Domain layer (`domain`)**
@@ -89,9 +90,9 @@ The backend is intentionally small but structured as a typical Spring Boot appli
 - **Exception layer (`exception`)**
     - `ApiError` – standard error response (code, message, timestamp, …)
     - `GlobalExceptionHandler` (`@RestControllerAdvice`) – maps exceptions to HTTP responses:
-        - `ITEM_NOT_FOUND` → 404
-        - `VALIDATION_ERROR` → 400
-        - `INTERNAL_ERROR` → 500
+        - `ITEM NOT FOUND` → 404
+        - `VALIDATION ERROR` → 400
+        - `INTERNAL ERROR` → 500
 
 - **Config (`config`)**
     - `InMemoryUserConfig`
@@ -129,6 +130,22 @@ Returns all items.
 - Response: `200 OK`
 - Body: `List<FridgeItemDto>`
 
+Example response:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Milk",
+    "category": "DAIRY",
+    "quantity": 1,
+    "unit": "pcs",
+    "storedAt": "2024-01-01",
+    "bestBefore": "2024-01-05",
+    "notes": null
+  }
+]
+```
 ### GET `/api/items/{id}`
 
 Returns a single item by ID.
@@ -145,6 +162,20 @@ Creates a new item.
 - Response:
     - `201 Created` – with created `FridgeItemDto`
     - `400 Bad Request` – validation error
+
+##### Example JSON request body:
+You can use this payload directly in **Swagger**, for test purposes:
+```json
+{
+  "name": "Milk",
+  "category": "DAIRY",
+  "quantity": 1,
+  "unit": "pcs",
+  "storedAt": "2024-01-01",
+  "bestBefore": "2024-01-05",
+  "notes": null
+}
+```
 
 ### PUT `/api/items/{id}`
 
@@ -182,7 +213,7 @@ mvn clean install
 ### RUN
 
 ```bash
-mvn clean install
+mvn spring-boot:run
 ```
 The application will be available at:
 
@@ -222,7 +253,18 @@ mvn test
 ## 7. Frontend (fridge-frontend)
 
 The Angular frontend lives in a separate repository (`fridge-frontend`) and:
-    - uses Basic Auth with the same test user
-    - calls this backend at http://localhost:8080/api/items
+    
+- uses Basic Auth with the same test user
+- calls this backend at http://localhost:8080/api/items
 
 For details, setup and tests, see the `README.md` in the [frontend repository](https://github.com/MrGarrison7212/fridge-frontend).
+
+## 8. Future improvements
+
+The current scope is intentionally small, but the architecture is ready for future extensions, for example:
+
+- Support for multiple users / fridges, so each user manages their own items
+- Replace the in-memory H2 database with a real persistent database (e.g. PostgreSQL) for production use
+- Additional filtering endpoints (e.g. items expiring soon based on best-before date)
+- Pagination and sorting for large lists of items
+- Email notifications for items that are close to expiring (once user accounts are introduced), etc...
