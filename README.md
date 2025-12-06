@@ -30,7 +30,7 @@ Each item has:
 - CRUD API for fridge items under `/api/items`
 - Input validation (Bean Validation)
 - Clear separation of layers (controller, service, repository, domain DTO/mappers)
-- Simple security with **Basic Auth** and a single test user
+- Simple security with **Basic Auth** and a [single test user](#authentication-for-testing)
 - Global error handling with a unified error model (`ApiError`)
 - DTO + mapper layer between REST and JPA entities
 - Controller-level tests using `@WebMvcTest` and `MockMvc`
@@ -177,3 +177,52 @@ Deletes an item.
 
 ```bash
 mvn clean install
+```
+
+### RUN
+
+```bash
+mvn clean install
+```
+The application will be available at:
+
+Backend base URL: http://localhost:8080
+
+Swagger UI:
+
+http://localhost:8080/swagger-ui/index.html
+
+### Authentication for testing
+
+Use HTTP Basic Auth:
+
+##### - username: `testuser`
+
+##### - password: `testuser123`
+
+---
+
+## 6. Testing
+
+Unit/HTTP tests are written with `@WebMvcTest` and `MockMvc`.
+
+Example: a test that verifies `POST /api/items`:
+- loads only the controller
+- disables security filters in test (@AutoConfigureMockMvc(addFilters = false))
+- mocks FridgeItemService
+- checks:
+  -  HTTP status (201 Created)
+  - content type (application/json)
+  - the expected JSON fields in the response
+
+Run all tests:
+```
+mvn test
+```
+## 7. Frontend (fridge-frontend)
+
+The Angular frontend lives in a separate repository (`fridge-frontend`) and:
+    - uses Basic Auth with the same test user
+    - calls this backend at http://localhost:8080/api/items
+
+For details, setup and tests, see the `README.md` in the [frontend repository](https://github.com/MrGarrison7212/fridge-frontend).
