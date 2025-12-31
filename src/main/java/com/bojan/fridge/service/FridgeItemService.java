@@ -7,18 +7,17 @@ import com.bojan.fridge.domain.mapper.FridgeItemMapper;
 import com.bojan.fridge.exception.FridgeItemNotFoundException;
 import com.bojan.fridge.persistence.model.FridgeItem;
 import com.bojan.fridge.persistence.repository.FridgeItemRepository;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class FridgeItemService {
 
     private final FridgeItemRepository repository;
-
-    public FridgeItemService(FridgeItemRepository repository) {
-        this.repository = repository;
-    }
 
     public List<FridgeItemDto> findAll(){
         return repository.findAll()

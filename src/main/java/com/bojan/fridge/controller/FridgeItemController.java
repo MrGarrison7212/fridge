@@ -5,6 +5,7 @@ import com.bojan.fridge.domain.dto.FridgeItemDto;
 import com.bojan.fridge.domain.dto.FridgeItemUpdateRequest;
 import com.bojan.fridge.service.FridgeItemService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/items")
+@RequiredArgsConstructor
 public class FridgeItemController {
 
     private final FridgeItemService fridgeItemService;
-
-    public FridgeItemController(FridgeItemService fridgeItemService) {
-        this.fridgeItemService = fridgeItemService;
-    }
 
     @GetMapping
     public List<FridgeItemDto> getAll() {
