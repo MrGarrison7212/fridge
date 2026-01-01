@@ -9,6 +9,8 @@ import com.bojan.fridge.persistence.model.FridgeItem;
 import com.bojan.fridge.persistence.repository.FridgeItemRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +21,16 @@ public class FridgeItemService {
 
     private final FridgeItemRepository repository;
 
-    public List<FridgeItemDto> findAll(){
+    public List<FridgeItemDto> findAll() {
         return repository.findAll()
                 .stream()
                 .map(FridgeItemMapper::toDto)
                 .toList();
+    }
+
+    public Page<FridgeItemDto> findAll(Pageable pageable) {
+        return repository.findAll(pageable)
+                .map(FridgeItemMapper::toDto);
     }
 
     public FridgeItemDto findById(Long id) {
