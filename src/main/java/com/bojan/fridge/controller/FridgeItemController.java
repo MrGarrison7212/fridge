@@ -6,6 +6,10 @@ import com.bojan.fridge.domain.dto.FridgeItemUpdateRequest;
 import com.bojan.fridge.service.FridgeItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +25,14 @@ public class FridgeItemController {
     @GetMapping
     public List<FridgeItemDto> getAll() {
         return fridgeItemService.findAll();
+    }
+
+    public Page<FridgeItemDto> getPage(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+        return fridgeItemService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
