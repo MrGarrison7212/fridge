@@ -27,6 +27,7 @@ public class FridgeItemController {
         return fridgeItemService.findAll();
     }
 
+    @GetMapping("/page")
     public Page<FridgeItemDto> getPage(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
