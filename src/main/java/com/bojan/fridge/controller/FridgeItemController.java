@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +30,13 @@ public class FridgeItemController {
 
     @GetMapping("/page")
     public Page<FridgeItemDto> getPage(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
+            @PageableDefault(
+                    page = 0,
+                    size = 5,
+                    sort = "id",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable
     ) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
         return fridgeItemService.findAll(pageable);
     }
 
