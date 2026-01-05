@@ -37,7 +37,7 @@ public class FridgeItemController {
                     direction = Sort.Direction.ASC
             ) Pageable pageable
     ) {
-        return fridgeItemService.findAll(pageable);
+        return fridgeItemService.findAllPaged(pageable);
     }
 
     @GetMapping("/{id}")

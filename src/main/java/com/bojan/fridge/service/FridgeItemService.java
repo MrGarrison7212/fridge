@@ -28,7 +28,7 @@ public class FridgeItemService {
                 .toList();
     }
 
-    public Page<FridgeItemDto> findAll(Pageable pageable) {
+    public Page<FridgeItemDto> findAllPaged(Pageable pageable) {
         return repository.findAll(pageable)
                 .map(FridgeItemMapper::toDto);
     }
