@@ -1,4 +1,8 @@
 spring:
+  config:
+    import:
+      - optional:classpath:application-postgres-local.yml
+      - optional:classpath:application-neon-local.yml
   profiles:
     active: h2
 
@@ -44,7 +48,24 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/fridge
     username: fridge
-    password: fridge
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: neon
+
+  datasource:
+    url: jdbc:postgresql://ep-mute-breeze-ag5bha3o-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+    username: neondb_owner
     driver-class-name: org.postgresql.Driver
 
   jpa:
