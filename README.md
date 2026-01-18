@@ -264,7 +264,5 @@ For details, setup and tests, see the `README.md` in the [frontend repository](h
 The current scope is intentionally small, but the architecture is ready for future extensions, for example:
 
 - Support for multiple users / fridges, so each user manages their own items
-- Replace the in-memory H2 database with a real persistent database (e.g. PostgreSQL) for production use
 - Additional filtering endpoints (e.g. items expiring soon based on best-before date)
-- Pagination and sorting for large lists of items
 - Email notifications for items that are close to expiring (once user accounts are introduced), etc...
