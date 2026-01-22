@@ -33,3 +33,4 @@ build/
 .vscode/
 /src/main/resources/application-neon-local.yml
 /src/main/resources/application-postgres-local.yml
+/.env
