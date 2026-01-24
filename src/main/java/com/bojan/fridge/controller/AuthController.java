@@ -4,7 +4,6 @@ import com.bojan.fridge.domain.dto.AuthRequest;
 import com.bojan.fridge.domain.dto.AuthResponseDto;
 import com.bojan.fridge.security.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
