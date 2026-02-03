@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "fridge_item")
 @Getter
-@Setter
+//@Setter
 @NoArgsConstructor
 public class FridgeItem {
 
