@@ -36,8 +36,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 )
-          //      .httpBasic(Customizer.withDefaults())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
         return http.build();
     }
