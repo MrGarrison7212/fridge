@@ -85,4 +85,4 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8081/realms/fridge-realm
+          issuer-uri: http://localhost:8081/realms/fridge
